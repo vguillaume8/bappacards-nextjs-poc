@@ -48,8 +48,9 @@ export default function UnregisteredCardPage() {
     try {
       setIsRegistering(true);
       setRegisterError('');
+      if (!cardId) return;
       const token = await currentUser.getIdToken();
-      const result = await registerCard(cardId!, token);
+      const result = await registerCard(cardId, token);
       if (result.success) {
         setRegisterSuccess(true);
         setTimeout(() => router.push('/dashboard'), 2000);
@@ -115,7 +116,7 @@ export default function UnregisteredCardPage() {
                   size="large"
                   startIcon={<LoginIcon />}
                   component={Link}
-                  href={`/log-in?cardId=${cardId}`}
+                  href={`/log-in?cardId=${encodeURIComponent(cardId ?? '')}`}
                   sx={{ py: 1.5 }}
                 >
                   Log In
@@ -128,7 +129,7 @@ export default function UnregisteredCardPage() {
                   size="large"
                   startIcon={<PersonAddIcon />}
                   component={Link}
-                  href={`/sign-up?cardId=${cardId}`}
+                  href={`/sign-up?cardId=${encodeURIComponent(cardId ?? '')}`}
                   sx={{ py: 1.5 }}
                 >
                   Create Account

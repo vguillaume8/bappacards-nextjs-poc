@@ -18,7 +18,11 @@ import { useTheme } from '@mui/material/styles';
 import type { BappaProfile } from '@/lib/api';
 import { captureAffiliateFromProfile } from '@/lib/referral';
 import ExchangeContactModal from './ExchangeContactModal';
+import QrCodeModal from './QrCodeModal';
+import ShareProfileMenu from './ShareProfileMenu';
+import AppleWalletModal from './AppleWalletModal';
 import ProfileSkeleton from './ProfileSkeleton';
+import { useAuth } from '@/context/AuthProvider';
 
 const SOCIAL_LABELS: Record<string, string> = {
   website: 'Website',
@@ -80,7 +84,10 @@ export default function ProfileView({ profile, initialExchangeOpen = false }: Pr
   const router = useRouter();
   const searchParams = useSearchParams();
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+  const { currentUser } = useAuth();
   const [exchangeOpen, setExchangeOpen] = useState(initialExchangeOpen);
+  const [qrOpen, setQrOpen] = useState(false);
+  const [walletOpen, setWalletOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -104,6 +111,8 @@ export default function ProfileView({ profile, initialExchangeOpen = false }: Pr
 
   const bgColor = prefs.background_color || '#ffffff';
   const linkColor = prefs.link_color || theme.palette.primary.main;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bappacards.com';
+  const profileUrl = profile.profile_id ? `${siteUrl}/profile/${profile.profile_id}` : '';
 
   const isVideo = profile.background_type === 'video' && profile.background_video;
 
@@ -239,6 +248,23 @@ export default function ProfileView({ profile, initialExchangeOpen = false }: Pr
             )}
           </Stack>
 
+          {/* Share / QR / Apple Wallet row */}
+          {profile.profile_id && (
+            <Stack direction="row" spacing={1} sx={{ mt: 1.5, flexWrap: 'wrap' }}>
+              <ShareProfileMenu profileId={profile.profile_id} onOpenQrModal={() => setQrOpen(true)} />
+              {currentUser && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => setWalletOpen(true)}
+                  sx={{ textTransform: 'none', fontWeight: 600, borderRadius: 2 }}
+                >
+                  Apple Wallet
+                </Button>
+              )}
+            </Stack>
+          )}
+
           {/* Social links */}
           {socialLinks.length > 0 && (
             <>
@@ -275,6 +301,16 @@ export default function ProfileView({ profile, initialExchangeOpen = false }: Pr
         onClose={() => setExchangeOpen(false)}
         profileId={profile.profile_id ?? ''}
         profile={profile}
+      />
+      <QrCodeModal
+        open={qrOpen}
+        onClose={() => setQrOpen(false)}
+        url={profileUrl}
+      />
+      <AppleWalletModal
+        open={walletOpen}
+        onClose={() => setWalletOpen(false)}
+        profileId={profile.profile_id}
       />
     </Container>
   );

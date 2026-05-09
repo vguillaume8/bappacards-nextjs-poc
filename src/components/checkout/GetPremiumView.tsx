@@ -48,13 +48,17 @@ export default function GetPremiumView({ productSlug }: GetPremiumViewProps) {
 
       const response = await createCheckoutProduct({ product: productId, metadata });
 
-      if ('data' in response && (response.data as { url?: string })?.url) {
-        window.location.href = (response.data as { url: string }).url;
+      const checkoutUrl = 'data' in response ? (response.data as { url?: string })?.url : undefined;
+      if (checkoutUrl && checkoutUrl.startsWith('https://checkout.stripe.com/')) {
+        window.location.href = checkoutUrl;
       } else {
+        const apiErr = 'data' in response
+          ? (response.data as { error?: string })?.error
+          : undefined;
         throw new Error(
-          ('data' in response && (response.data as { error?: string })?.error) ||
+          apiErr ||
           ('message' in response && response.message) ||
-          'Failed to create checkout session',
+          (checkoutUrl ? 'Unexpected checkout URL' : 'Failed to create checkout session'),
         );
       }
     } catch (err) {

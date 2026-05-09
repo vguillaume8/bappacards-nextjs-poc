@@ -31,7 +31,7 @@ import {
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { useAuth } from '@/context/AuthProvider';
-import { sendContactUs } from '@/lib/api';
+import { sendContactUs, getCheckoutSession } from '@/lib/api';
 import { withReferralCode } from '@/lib/referral';
 import { PRODUCT_NAMES } from '@/lib/products';
 
@@ -44,11 +44,26 @@ const PREMIUM_FEATURES = [
   { icon: <QrCode2 sx={{ fontSize: 40 }} />, title: 'QR Code Generator', description: 'Generate custom QR codes for any occasion' },
 ];
 
+interface StripeSession {
+  id: string;
+  payment_status?: string;
+  customer_email?: string;
+  amount_total?: number;
+  currency?: string;
+  metadata?: Record<string, string>;
+}
+
+function isStripeSession(obj: unknown): obj is StripeSession {
+  return typeof obj === 'object' && obj !== null && 'id' in obj && typeof (obj as Record<string, unknown>).id === 'string';
+}
+
 export default function CheckoutSuccessPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { currentUser } = useAuth();
   const [loading, setLoading] = useState(true);
+  const [sessionValid, setSessionValid] = useState<boolean | null>(null);
+  const [sessionData, setSessionData] = useState<StripeSession | null>(null);
 
   const sessionId = searchParams.get('session_id');
   const productType = searchParams.get('product');
@@ -59,9 +74,28 @@ export default function CheckoutSuccessPage() {
   const [notification, setNotification] = useState({ show: false, message: '', type: 'success' as 'success' | 'error' });
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 500);
-    return () => clearTimeout(t);
-  }, []);
+    const verifySession = async () => {
+      if (!sessionId) {
+        setSessionValid(false);
+        setLoading(false);
+        return;
+      }
+      try {
+        const res = await getCheckoutSession(sessionId);
+        if ('data' in res && isStripeSession(res.data)) {
+          setSessionData(res.data);
+          setSessionValid(true);
+        } else {
+          setSessionValid(false);
+        }
+      } catch {
+        setSessionValid(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+    verifySession();
+  }, [sessionId]);
 
   const getProductName = () => PRODUCT_NAMES[productType ?? ''] || 'Premium Business Card';
 
@@ -93,6 +127,20 @@ export default function CheckoutSuccessPage() {
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <CircularProgress size={60} />
       </Box>
+    );
+  }
+
+  if (sessionValid === false) {
+    return (
+      <Container maxWidth="sm" sx={{ pt: 12, pb: 8, textAlign: 'center' }}>
+        <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
+          <Typography variant="body1" sx={{ fontWeight: 600, mb: 0.5 }}>Invalid or Missing Order</Typography>
+          <Typography variant="body2">We could not verify this order. If you completed a purchase, please check your email for a confirmation, or contact support.</Typography>
+        </Alert>
+        <Button variant="contained" component={Link} href="/" sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 600 }}>
+          Return to Home
+        </Button>
+      </Container>
     );
   }
 
@@ -144,6 +192,11 @@ export default function CheckoutSuccessPage() {
               label={`Order ID: ${sessionId.slice(-12)}`}
               sx={{ bgcolor: 'rgba(255,255,255,0.15)', color: 'white', fontWeight: 600, fontSize: '0.9rem', px: 2, py: 2.5, borderRadius: '8px' }}
             />
+          )}
+          {sessionData?.customer_email && (
+            <Typography variant="body2" sx={{ mt: 2, color: 'rgba(255,255,255,0.7)' }}>
+              Confirmation sent to {sessionData.customer_email}
+            </Typography>
           )}
         </Container>
       </Box>

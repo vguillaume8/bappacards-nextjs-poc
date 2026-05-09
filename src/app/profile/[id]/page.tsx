@@ -29,7 +29,8 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
     ? `Connect with ${fullName}, ${profile.title}. View their digital business card and get in touch.`
     : `Connect with ${fullName}. View their digital business card and get in touch.`;
   const image = profile.profile_photo;
-  const url = `https://bappacards.com/profile/${id}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bappacards.com';
+  const url = `${siteUrl}/profile/${id}`;
 
   return {
     title,
@@ -69,7 +70,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
     jobTitle: profile.title,
     worksFor: profile.company ? { '@type': 'Organization', name: profile.company } : undefined,
     image: profile.profile_photo,
-    url: `https://bappacards.com/profile/${id}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://bappacards.com'}/profile/${id}`,
   };
 
   return (
