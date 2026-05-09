@@ -12,13 +12,12 @@ export const metadata: Metadata = {
       'Empower student leaders with digital business cards that enhance campus life and student government networking.',
     url: 'https://bappacards.com/solutions/higher-ed/student-affairs',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function StudentAffairsPage() {
   return (
     <MicrositeTemplate
-      pageTitle="Student Affairs & Student Government Solutions — Bappa Digital Business Cards"
-      pageDescription="Empower student leaders and enhance campus life with Bappa digital business cards."
       heroTitle="Empower Student Leaders, Enhance Campus Life"
       heroSubtext="Student government leaders, orientation staff, club officers, and residence life coordinators shape the campus experience. Give them a professional digital presence that helps them connect with students, build their leadership portfolio, and represent their organization with confidence."
       heroBackground="black"

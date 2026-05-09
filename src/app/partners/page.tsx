@@ -30,6 +30,7 @@ export const metadata: Metadata = {
       'Earn 20-30% commissions as a BappaCards Brand Partner. Tiered commission structure with recurring revenue from subscriptions. No inventory, no fulfillment.',
     url: 'https://bappacards.com/partners',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 const faqItems = [

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
       'Complete guide to setting up and using your BappaCards digital business card. Learn profile setup, sharing, analytics, subscriptions, and more.',
     url: 'https://bappacards.com/guide',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function GuidePage() {

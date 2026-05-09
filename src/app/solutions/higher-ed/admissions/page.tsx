@@ -12,13 +12,12 @@ export const metadata: Metadata = {
       'Transform college fairs and campus visits with Bappa digital business cards for admissions teams. Track engagement, update info instantly, and never lose a prospect.',
     url: 'https://bappacards.com/solutions/higher-ed/admissions',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function AdmissionsPage() {
   return (
     <MicrositeTemplate
-      pageTitle="Admissions & Enrollment Solutions — Bappa Digital Business Cards"
-      pageDescription="Transform college fairs and campus visits with Bappa digital business cards."
       heroTitle="Turn Campus Visits into Lasting Connections"
       heroSubtext="Give your admissions counselors the tool that makes every interaction count. Bappa digital business cards let prospects save your info instantly, while you track every engagement — from college fair taps to virtual session views."
       heroBackground="black"

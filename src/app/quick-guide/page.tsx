@@ -19,6 +19,7 @@ export const metadata: Metadata = {
       'Get your BappaCards digital business card set up in 5 minutes. Quick start guide with step-by-step instructions.',
     url: 'https://bappacards.com/quick-guide',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 const steps = [

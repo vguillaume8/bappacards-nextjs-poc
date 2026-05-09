@@ -12,13 +12,12 @@ export const metadata: Metadata = {
       'Help students and employer partners network professionally with Bappa digital business cards.',
     url: 'https://bappacards.com/solutions/higher-ed/career-development',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function CareerDevelopmentPage() {
   return (
     <MicrositeTemplate
-      pageTitle="Career Development & Employer Relations Solutions — Bappa"
-      pageDescription="Help students network like professionals with Bappa digital business cards."
       heroTitle="Empower Students to Network Like Professionals"
       heroSubtext="Give every student a professional digital business card before they set foot at their first career fair. And give your employer partners a modern way to share their opportunities — instantly, on any device."
       heroBackground="red"

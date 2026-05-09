@@ -12,6 +12,7 @@ export const metadata: Metadata = {
       'Join the BappaCards affiliate program. Earn 20% commission on every sale you refer. Instant access, no approval needed.',
     url: 'https://bappacards.com/become-an-affiliate',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function BecomeAnAffiliatePage() {

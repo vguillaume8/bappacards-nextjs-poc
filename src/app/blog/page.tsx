@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     title: 'BappaCards Blog',
     description: 'Expert tips on digital networking, NFC business cards, and growing your professional network.',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function BlogPage() {

@@ -109,7 +109,6 @@ export default function BappaConnectContent() {
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
-              component={Link}
               href="/signup"
               variant="contained"
               size="large"
@@ -316,7 +315,6 @@ export default function BappaConnectContent() {
                       ))}
                     </Box>
                     <Button
-                      component={Link}
                       href={plan.href}
                       variant={plan.highlight ? 'contained' : 'outlined'}
                       fullWidth
@@ -377,7 +375,6 @@ export default function BappaConnectContent() {
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
-              component={Link}
               href="/signup"
               variant="contained"
               size="large"

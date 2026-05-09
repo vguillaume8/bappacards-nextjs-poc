@@ -12,13 +12,12 @@ export const metadata: Metadata = {
       'Amplify your university brand at every touchpoint with Bappa digital business cards.',
     url: 'https://bappacards.com/solutions/higher-ed/communications-marketing',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function CommunicationsMarketingPage() {
   return (
     <MicrositeTemplate
-      pageTitle="Communications & Marketing Solutions — Bappa Digital Business Cards"
-      pageDescription="Amplify your brand at every touchpoint with Bappa digital business cards."
       heroTitle="Amplify Your Brand at Every Touchpoint"
       heroSubtext="Your communications and marketing team tells your institution's story to the world. Give them digital business cards that are as polished as the campaigns they create — and that drive traffic to every piece of content they produce."
       heroBackground="black"

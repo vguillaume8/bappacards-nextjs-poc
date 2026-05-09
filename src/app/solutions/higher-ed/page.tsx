@@ -20,6 +20,7 @@ export const metadata: Metadata = {
       'Transform networking across your campus with Bappa digital business cards. Solutions for admissions, career services, alumni relations, and more.',
     url: 'https://bappacards.com/solutions/higher-ed',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 const departments = [

@@ -11,7 +11,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Link from 'next/link';
 
 export interface BenefitItem {
@@ -32,9 +31,6 @@ export interface ComparisonData {
 }
 
 export interface MicrositeTemplateProps {
-  pageTitle: string;
-  pageDescription: string;
-
   heroId?: string;
   heroTitle: string;
   heroSubtext: string;

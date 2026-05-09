@@ -77,7 +77,11 @@ export default function AffiliateContent() {
       }
 
       const data = await res.json();
-      setReferralLink(data?.referralLink ?? data?.link ?? `https://bappacards.com?ref=${currentUser.uid}`);
+      const link = data?.referralLink ?? data?.link;
+      if (!link) {
+        throw new Error('Affiliate account created but no referral link was returned. Please contact support@bappacards.com.');
+      }
+      setReferralLink(link);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
       setError(message);
@@ -333,7 +337,6 @@ export default function AffiliateContent() {
             Looking for a deeper partnership with tiered commissions and brand-level benefits?
           </Typography>
           <Button
-            component={Link}
             href="/partners"
             variant="outlined"
             sx={{

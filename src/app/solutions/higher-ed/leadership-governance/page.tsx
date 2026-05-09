@@ -12,13 +12,12 @@ export const metadata: Metadata = {
       'Help university presidents, provosts, and board members connect with confidence using premium Bappa digital business cards.',
     url: 'https://bappacards.com/solutions/higher-ed/leadership-governance',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function LeadershipGovernancePage() {
   return (
     <MicrositeTemplate
-      pageTitle="Leadership & Governance Solutions — Bappa Digital Business Cards"
-      pageDescription="Help university leaders connect with confidence using premium digital business cards."
       heroTitle="Lead with Purpose, Connect with Confidence"
       heroSubtext="University presidents, provosts, trustees, and board members represent your institution at the highest levels. Give them a digital business card that reflects the gravity of those conversations and opens doors to the partnerships that shape your institution's future."
       heroBackground="red"

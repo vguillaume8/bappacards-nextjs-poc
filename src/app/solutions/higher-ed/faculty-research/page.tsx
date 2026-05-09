@@ -12,13 +12,12 @@ export const metadata: Metadata = {
       'Connect faculty and researchers with digital business cards that share publications, lab contacts, and collaboration opportunities.',
     url: 'https://bappacards.com/solutions/higher-ed/faculty-research',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function FacultyResearchPage() {
   return (
     <MicrositeTemplate
-      pageTitle="Faculty & Research Solutions — Bappa Digital Business Cards"
-      pageDescription="Connect minds and advance research with Bappa digital business cards."
       heroTitle="Connect Minds, Advance Research"
       heroSubtext="Faculty and researchers spend careers building knowledge and relationships. Bappa gives them a single digital touchpoint that shares their work, contact info, and collaboration interests — everywhere from international conferences to cross-department meetings."
       heroBackground="black"

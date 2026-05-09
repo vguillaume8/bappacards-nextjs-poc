@@ -12,13 +12,12 @@ export const metadata: Metadata = {
       'Build lasting alumni and donor relationships with Bappa digital business cards.',
     url: 'https://bappacards.com/solutions/higher-ed/institutional-advancement',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 export default function InstitutionalAdvancementPage() {
   return (
     <MicrositeTemplate
-      pageTitle="Institutional Advancement & Alumni Engagement Solutions — Bappa"
-      pageDescription="Build lasting alumni and donor relationships with Bappa digital business cards."
       heroTitle="Build Lasting Alumni and Donor Relationships"
       heroSubtext="Your advancement team makes your institution's future possible. Give them a tool worthy of the conversations they're having — a digital business card that reflects the prestige of your institution and makes every major gift officer interaction memorable."
       heroBackground="red"
