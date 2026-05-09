@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { Google, Visibility, VisibilityOff, Fingerprint, Person } from '@mui/icons-material';
 import { useAuth } from '@/context/AuthProvider';
-import { createUser } from '@/lib/api';
+import { createUser, createGmailUser } from '@/lib/api';
 
 function getReferralCode(): string | undefined {
   if (typeof window === 'undefined') return undefined;
@@ -53,7 +53,7 @@ export default function SignupPage() {
   const searchParams = useSearchParams();
   const cardId = searchParams.get('cardId');
 
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, getGoogleRedirectResult } = useAuth();
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const showError = (msg: string) => {
@@ -61,10 +61,44 @@ export default function SignupPage() {
     setOpenAlert(true);
   };
 
+  // Handle Google OAuth redirect result when user returns from Google auth
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const result = await getGoogleRedirectResult();
+        if (!result || cancelled) return;
+        const user = result.user;
+        setIsLoading(true);
+        try {
+          const referralCode = getReferralCode();
+          const response = await createGmailUser(user.email ?? '', referralCode, user.displayName ?? '');
+          if (!('data' in response)) {
+            showError((response as { message?: string }).message ?? 'An error occurred during signup');
+          } else {
+            setAlertMessage('Your account has been created successfully');
+            setOpenAlert(true);
+            setTimeout(() => {
+              router.push(cardId ? `/log-in?cardId=${cardId}` : '/log-in');
+            }, 2000);
+          }
+        } catch {
+          showError('Error connecting to backend service');
+        } finally {
+          if (!cancelled) setIsLoading(false);
+        }
+      } catch {
+        // No redirect result — normal page load
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleGoogleSignUp = async () => {
     try {
       await signInWithGoogle();
-      // Browser navigates to Google
+      // Browser navigates to Google — page unloads
     } catch (error) {
       const err = error as { message?: string };
       showError(err.message ?? 'An unexpected error occurred');
@@ -86,19 +120,23 @@ export default function SignupPage() {
       return;
     }
 
+    // Require reCAPTCHA — fail hard if unavailable
+    if (!executeRecaptcha) {
+      showError('reCAPTCHA not loaded. Please refresh and try again.');
+      return;
+    }
+
     setIsLoading(true);
     try {
-      if (executeRecaptcha) {
-        const token = await executeRecaptcha('signup');
-        if (!token) {
-          showError('reCAPTCHA verification failed. Please try again.');
-          setIsLoading(false);
-          return;
-        }
+      const recaptchaToken = await executeRecaptcha('signup');
+      if (!recaptchaToken) {
+        showError('reCAPTCHA verification failed. Please try again.');
+        setIsLoading(false);
+        return;
       }
 
       const referralCode = getReferralCode();
-      const response = await createUser(email, password, fullName, referralCode);
+      const response = await createUser(email, password, fullName, referralCode, recaptchaToken);
 
       if (!('data' in response)) {
         showError((response as { message?: string }).message ?? 'An error occurred during signup');

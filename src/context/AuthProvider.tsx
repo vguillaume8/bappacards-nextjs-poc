@@ -168,8 +168,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const forgotPassword = (email: string) => sendPasswordResetEmail(auth, email);
 
-  const sendVerification = (user: User) =>
-    sendEmailVerification(user, { url: 'https://bappacards.com/log-in' });
+  const sendVerification = (user: User) => {
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://bappacards.com';
+    return sendEmailVerification(user, { url: `${appUrl}/log-in` });
+  };
 
   const signInWithGoogle = () => signInWithRedirect(auth, googleProvider);
 
