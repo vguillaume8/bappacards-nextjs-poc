@@ -1,7 +1,19 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { User } from 'firebase/auth';
+import {
+  type User,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signOut,
+  sendPasswordResetEmail,
+  sendEmailVerification,
+  signInWithRedirect,
+  getRedirectResult,
+  GoogleAuthProvider,
+  type UserCredential,
+} from 'firebase/auth';
 import * as Sentry from '@sentry/nextjs';
 import { auth, recoverFromIndexedDBError } from '@/lib/firebase';
 import { getMe } from '@/lib/api';
@@ -16,12 +28,28 @@ interface AuthContextValue {
   currentUser: User | null;
   userData: UserData | null;
   refreshUserData: () => Promise<UserData | null>;
+  signInUser: (email: string, password: string) => Promise<UserCredential>;
+  registerUser: (email: string, password: string, name: string) => Promise<UserCredential>;
+  logoutUser: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  sendVerification: (user: User) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  getGoogleRedirectResult: () => Promise<UserCredential | null>;
 }
+
+const googleProvider = new GoogleAuthProvider();
 
 const AuthContext = createContext<AuthContextValue>({
   currentUser: null,
   userData: null,
   refreshUserData: async () => null,
+  signInUser: () => Promise.reject(new Error('AuthProvider not mounted')),
+  registerUser: () => Promise.reject(new Error('AuthProvider not mounted')),
+  logoutUser: () => Promise.reject(new Error('AuthProvider not mounted')),
+  forgotPassword: () => Promise.reject(new Error('AuthProvider not mounted')),
+  sendVerification: () => Promise.reject(new Error('AuthProvider not mounted')),
+  signInWithGoogle: () => Promise.reject(new Error('AuthProvider not mounted')),
+  getGoogleRedirectResult: () => Promise.reject(new Error('AuthProvider not mounted')),
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -124,6 +152,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const signInUser = (email: string, password: string) =>
+    signInWithEmailAndPassword(auth, email, password);
+
+  const registerUser = async (email: string, password: string, name: string) => {
+    const credential = await createUserWithEmailAndPassword(auth, email, password);
+    if (name) await updateProfile(credential.user, { displayName: name });
+    return credential;
+  };
+
+  const logoutUser = () => {
+    document.cookie = 'auth-token=; path=/; max-age=0';
+    return signOut(auth);
+  };
+
+  const forgotPassword = (email: string) => sendPasswordResetEmail(auth, email);
+
+  const sendVerification = (user: User) =>
+    sendEmailVerification(user, { url: 'https://bappacards.com/log-in' });
+
+  const signInWithGoogle = () => signInWithRedirect(auth, googleProvider);
+
+  const getGoogleRedirectResult = () => getRedirectResult(auth);
+
   if (pending) {
     return (
       <div
@@ -140,7 +191,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser, userData, refreshUserData }}>
+    <AuthContext.Provider
+      value={{
+        currentUser,
+        userData,
+        refreshUserData,
+        signInUser,
+        registerUser,
+        logoutUser,
+        forgotPassword,
+        sendVerification,
+        signInWithGoogle,
+        getGoogleRedirectResult,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
