@@ -50,7 +50,9 @@ export default function LoginPage() {
   const { signInUser, sendVerification, signInWithGoogle, getGoogleRedirectResult } = useAuth();
 
   const getPostLoginDest = () => {
-    if (redirectParam) return redirectParam;
+    if (redirectParam && redirectParam.startsWith('/') && !redirectParam.startsWith('//')) {
+      return redirectParam;
+    }
     if (cardId) return `/unregistered-card?cardId=${cardId}`;
     return '/dashboard';
   };
