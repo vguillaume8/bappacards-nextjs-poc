@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import ThemeRegistry from '@/components/ThemeRegistry';
 import { AuthProvider } from '@/context/AuthProvider';
+import ReCaptchaClientProvider from '@/components/ReCaptchaClientProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
@@ -44,13 +44,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MetaPixelProvider />
         <ThemeRegistry>
           <AuthProvider>
-            <GoogleReCaptchaProvider
-              reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''}
-            >
+            <ReCaptchaClientProvider>
               <Header />
               <main style={{ flex: 1 }}>{children}</main>
               <Footer />
-            </GoogleReCaptchaProvider>
+            </ReCaptchaClientProvider>
           </AuthProvider>
         </ThemeRegistry>
       </body>
