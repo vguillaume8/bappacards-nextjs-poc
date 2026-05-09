@@ -297,8 +297,8 @@ export default function PartnersPage() {
           </Typography>
           <Grid container spacing={2}>
             {[
-              { name: 'Premium', price: '$1/mo', earn: '$0.20/mo per user', description: 'Basic analytics and additional link slots' },
-              { name: 'Premium+', price: '$2/mo', earn: '$0.40/mo per user', description: 'Video backgrounds, gallery, and CRM integration' },
+              { name: 'Bappa Premium', price: '$5/mo', earn: '$1.00/mo per user', description: 'Basic analytics and additional link slots' },
+              { name: 'Bappa Premium Plus', price: '$12/mo', earn: '$2.40/mo per user', description: 'Video backgrounds, gallery, and CRM integration' },
               { name: 'Teams', price: '$10/mo + $1/user', earn: '$2+/mo per team', description: 'Admin dashboard, bulk updates, team analytics' },
             ].map((plan, i) => (
               <Grid key={i} size={{ xs: 12, md: 4 }}>
