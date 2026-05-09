@@ -214,15 +214,15 @@ export default async function HomePage() {
                     }}
                   >
                     <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.5rem', fontFamily: "'Poppins', serif" }}>
-                      {demoProfile?.firstName?.[0] ?? demoProfile?.name?.[0] ?? 'B'}
+                      {demoProfile?.firstname?.[0] ?? 'B'}
                     </Typography>
                   </Box>
                 </Box>
 
                 <Box sx={{ pt: 7, pb: 3, px: 3 }}>
                   <Typography variant="h6" sx={{ fontWeight: 700, color: '#000', fontFamily: "'Poppins', serif" }}>
-                    {demoProfile?.name ?? demoProfile?.firstName
-                      ? `${demoProfile?.firstName ?? ''} ${demoProfile?.lastName ?? ''}`.trim()
+                    {demoProfile?.firstname
+                      ? `${demoProfile.firstname} ${demoProfile.lastname ?? ''}`.trim()
                       : 'Bappa Demo User'}
                   </Typography>
                   {demoProfile?.title && (

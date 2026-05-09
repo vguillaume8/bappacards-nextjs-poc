@@ -13,19 +13,55 @@ const CLIENT_BASE =
 // Shared types
 // ──────────────────────────────────────────────
 
+export interface BappaProfileLinks {
+  websites?: string[];
+  instagram_usernames?: string[];
+  twitter_usernames?: string[];
+  linkedin_urls?: string[];
+  snapchat_usernames?: string[];
+  tiktok_usernames?: string[];
+  facebook_urls?: string[];
+  youtube_urls?: string[];
+  whatsapp_numbers?: string[];
+  cashapp_usernames?: string[];
+  venmo_usernames?: string[];
+  paypal_usernames?: string[];
+  social_order?: string[];
+}
+
+export interface BappaProfilePreferences {
+  font?: string;
+  card_theme?: string;
+  link_color?: string;
+  background_color?: string;
+  redirectEnabled?: boolean;
+  redirectLink?: string;
+  showSaveContactButton?: boolean;
+  showExchangeContactButton?: boolean;
+  showEmailButton?: boolean;
+}
+
 export interface BappaProfile {
   _id: string;
-  name?: string;
-  firstName?: string;
-  lastName?: string;
+  profile_id?: string;
+  firstname?: string;
+  lastname?: string;
   title?: string;
   company?: string;
   email?: string;
   phone?: string;
   bio?: string;
-  profileImage?: string;
-  backgroundImage?: string;
-  links?: Array<{ label: string; url: string; type: string }>;
+  profile_photo?: string;
+  background_photo?: string;
+  background_video?: string;
+  background_type?: string;
+  company_photo?: string;
+  profile_url?: string;
+  match_link_icons?: boolean;
+  is_bappa_gold?: boolean;
+  affiliate_tag?: string;
+  preferences?: BappaProfilePreferences;
+  links?: BappaProfileLinks;
 }
 
 export interface UserData {
@@ -269,6 +305,15 @@ export async function getUserAnalytics(token: string) {
 
 export async function trackReferralClick(code: string) {
   return clientPost('referral/v', { code });
+}
+
+export async function trackLinkClick(data: {
+  profile_id: string;
+  link_type: string;
+  link_identifier: string;
+  friendly_name: string | null;
+}) {
+  return clientPost('analytics/link-click', data);
 }
 
 // ──────────────────────────────────────────────
