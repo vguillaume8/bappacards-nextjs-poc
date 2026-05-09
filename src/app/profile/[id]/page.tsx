@@ -77,7 +77,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
       {/* SSR-visible profile data for search engines */}
       <noscript>
