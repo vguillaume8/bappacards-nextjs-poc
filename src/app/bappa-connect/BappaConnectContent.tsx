@@ -56,7 +56,7 @@ const plans = [
     highlight: false,
   },
   {
-    name: 'Premium',
+    name: 'Bappa Premium',
     price: '$5',
     period: '/month',
     description: 'For professionals who network seriously',
@@ -66,7 +66,7 @@ const plans = [
     highlight: true,
   },
   {
-    name: 'Premium Plus',
+    name: 'Bappa Premium Plus',
     price: '$12',
     period: '/month',
     description: 'For teams and power users',

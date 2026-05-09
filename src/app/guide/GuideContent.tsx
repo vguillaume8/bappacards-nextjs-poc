@@ -351,12 +351,12 @@ export default function GuideContent() {
                 content: 'Create a complete digital business card with your photo, bio, contact info, and social links. Share via QR code or direct link.',
               },
               {
-                title: 'Premium Plan ($1/month)',
-                content: 'Unlock advanced analytics, more link slots, custom themes, and priority support.',
+                title: 'Bappa Premium ($5/month)',
+                content: 'Unlock advanced analytics, video backgrounds, custom themes, Apple Wallet integration, and more.',
               },
               {
-                title: 'Premium+ Plan ($2/month)',
-                content: 'Everything in Premium plus video backgrounds, gallery, and Bappa Connect CRM integration.',
+                title: 'Bappa Premium Plus ($12/month)',
+                content: 'Everything in Bappa Premium, plus Bappa Connect — our AI-powered relationship management platform.',
               },
               {
                 title: 'Teams Plan ($10/month + $1/user)',
