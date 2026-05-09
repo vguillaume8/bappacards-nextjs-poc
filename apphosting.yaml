@@ -17,3 +17,34 @@ env:
     value: https://api.bappacards.com/api/v1
     availability:
       - RUNTIME
+
+  - variable: NEXT_PUBLIC_FIREBASE_KEY
+    secret: NEXT_PUBLIC_FIREBASE_KEY
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_DOMAIN
+    secret: NEXT_PUBLIC_FIREBASE_DOMAIN
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    secret: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    secret: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_SENDER_ID
+    secret: NEXT_PUBLIC_FIREBASE_SENDER_ID
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    secret: NEXT_PUBLIC_FIREBASE_APP_ID
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    secret: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_SENTRY_DSN
+    secret: NEXT_PUBLIC_SENTRY_DSN
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+    secret: NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_META_PIXEL_ID
+    secret: NEXT_PUBLIC_META_PIXEL_ID
+    availability: [BUILD, RUNTIME]
