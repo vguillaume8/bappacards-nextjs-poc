@@ -47,7 +47,7 @@ async function serverGet<T>(slug: string, token?: string): Promise<T | null> {
   try {
     const res = await fetch(`${SERVER_BASE}/${slug}`, {
       headers,
-      next: { revalidate: 60 },
+      next: { revalidate: 3600 },
     });
     if (!res.ok) return null;
     const json = await res.json();

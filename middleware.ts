@@ -17,19 +17,7 @@ function isProtected(pathname: string): boolean {
 }
 
 function hasAuthCookie(request: NextRequest): boolean {
-  // Firebase Auth sets a cookie whose name starts with the project ID.
-  // We check for either the standard Firebase cookie or our own session cookie.
-  const cookies = request.cookies;
-  for (const [name] of cookies) {
-    if (
-      name.startsWith('firebase:authUser') ||
-      name.startsWith('__session') ||
-      name === 'auth-token'
-    ) {
-      return true;
-    }
-  }
-  return false;
+  return request.cookies.has('auth-token');
 }
 
 export function middleware(request: NextRequest) {

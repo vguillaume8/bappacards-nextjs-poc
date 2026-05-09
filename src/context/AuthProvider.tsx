@@ -46,12 +46,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          await user.getIdToken(true);
+          const token = await user.getIdToken(true);
+          document.cookie = 'auth-token=1; path=/; SameSite=Strict';
           setCurrentUser(user);
           Sentry.setUser({ id: user.uid, email: user.email ?? undefined });
 
           try {
-            const token = await user.getIdToken();
             const data = await getMe(token);
             setUserData(data?.id ? data : null);
           } catch {
@@ -64,6 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (recovered && auth.currentUser) {
               try {
                 const token = await auth.currentUser.getIdToken(true);
+                document.cookie = 'auth-token=1; path=/; SameSite=Strict';
                 setCurrentUser(auth.currentUser);
                 const data = await getMe(token);
                 setUserData(data?.id ? data : null);
@@ -74,11 +75,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               }
             }
           }
+          document.cookie = 'auth-token=; path=/; max-age=0';
           setCurrentUser(null);
           setUserData(null);
           auth.signOut();
         }
       } else {
+        document.cookie = 'auth-token=; path=/; max-age=0';
         Sentry.setUser(null);
         setCurrentUser(null);
         setUserData(null);
