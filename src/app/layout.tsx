@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import ThemeRegistry from '@/components/ThemeRegistry';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -35,11 +33,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body style={{ margin: 0, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <body style={{ margin: 0 }}>
         <ThemeRegistry>
-          <Header />
-          <main style={{ flex: 1 }}>{children}</main>
-          <Footer />
+          {children}
         </ThemeRegistry>
       </body>
     </html>
