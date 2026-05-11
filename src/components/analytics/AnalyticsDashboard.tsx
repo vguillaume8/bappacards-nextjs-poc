@@ -113,6 +113,15 @@ interface LinkClicksData {
   clicksByTypeAndIdentifier?: Record<string, Record<string, IdentifierEntry>>;
 }
 
+type AnalyticsApiPayload = AnalyticsData & {
+  analytics?: AnalyticsData;
+  linkClicks?: LinkClicksData;
+};
+
+interface Subscription {
+  status?: string;
+}
+
 // ──────────────────────────────────────────────
 // Constants
 // ──────────────────────────────────────────────
@@ -264,9 +273,8 @@ export default function AnalyticsDashboard() {
 
   const timeRange = TIME_RANGES[tabValue];
 
-  const hasPremium =
-    (userData?.subscription as any)?.status === 'active' ||
-    (userData?.subscription as any)?.status === 'trialing';
+  const subStatus = (userData?.subscription as Subscription | undefined)?.status;
+  const hasPremium = subStatus === 'active' || subStatus === 'trialing';
 
   // ── Fetch analytics ──
   useEffect(() => {
@@ -280,7 +288,7 @@ export default function AnalyticsDashboard() {
         const res = await getUserAnalytics(token);
         if (cancelled) return;
         if ('data' in res) {
-          const d = res.data as any;
+          const d = res.data as AnalyticsApiPayload;
           setAnalyticsData(d?.analytics ?? d ?? null);
           setLinkClicksData(d?.linkClicks ?? null);
         } else {
