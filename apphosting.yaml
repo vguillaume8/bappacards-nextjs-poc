@@ -18,33 +18,59 @@ env:
     availability:
       - RUNTIME
 
+  # Firebase client config — NOT secrets; publicly embedded in JS bundle at build time
   - variable: NEXT_PUBLIC_FIREBASE_KEY
-    secret: NEXT_PUBLIC_FIREBASE_KEY
-    availability: [BUILD, RUNTIME]
+    value: AIzaSyAovi93QVitIIEsV4xteIWh63heirMRHz4
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: NEXT_PUBLIC_FIREBASE_DOMAIN
-    secret: NEXT_PUBLIC_FIREBASE_DOMAIN
-    availability: [BUILD, RUNTIME]
+    value: bappacards-1636a.firebaseapp.com
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-    secret: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-    availability: [BUILD, RUNTIME]
+    value: bappacards-1636a
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-    secret: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-    availability: [BUILD, RUNTIME]
+    value: bappacards-1636a.appspot.com
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: NEXT_PUBLIC_FIREBASE_SENDER_ID
-    secret: NEXT_PUBLIC_FIREBASE_SENDER_ID
-    availability: [BUILD, RUNTIME]
+    value: "525337956553"
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: NEXT_PUBLIC_FIREBASE_APP_ID
-    secret: NEXT_PUBLIC_FIREBASE_APP_ID
-    availability: [BUILD, RUNTIME]
+    value: 1:525337956553:web:12b090822872e7b10b3d18
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-    secret: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-    availability: [BUILD, RUNTIME]
-  - variable: NEXT_PUBLIC_SENTRY_DSN
-    secret: NEXT_PUBLIC_SENTRY_DSN
-    availability: [BUILD, RUNTIME]
-  - variable: NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-    secret: NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-    availability: [BUILD, RUNTIME]
-  - variable: NEXT_PUBLIC_META_PIXEL_ID
-    secret: NEXT_PUBLIC_META_PIXEL_ID
-    availability: [BUILD, RUNTIME]
+    value: G-4XKRRZYT1Q
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # API URL for client-side fetch (NEXT_PUBLIC_API_BASE_URL is what src/lib/api.ts reads)
+  - variable: NEXT_PUBLIC_API_BASE_URL
+    value: https://api.bappacards.com/api/v1
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # Analytics — GA measurement ID matches Firebase Analytics property for this app
+  - variable: NEXT_PUBLIC_GA_MEASUREMENT_ID
+    value: G-4XKRRZYT1Q
+    availability:
+      - BUILD
+      - RUNTIME
