@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'firebasestorage.googleapis.com' },
     ],
   },
+  async redirects() {
+    return [
+      { source: '/login', destination: '/log-in', permanent: true },
+      { source: '/signup', destination: '/sign-up', permanent: true },
+    ];
+  },
   // Output standalone for Firebase App Hosting container builds
   output: 'standalone',
 };

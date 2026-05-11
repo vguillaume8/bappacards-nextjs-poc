@@ -166,9 +166,11 @@ export async function createUser(
   password: string,
   fullName = '',
   referral_code?: string,
+  recaptcha_token?: string,
 ) {
   const body: Record<string, string> = { email, password, fullName };
   if (referral_code) body.referral_code = referral_code;
+  if (recaptcha_token) body.recaptcha_token = recaptcha_token;
   return clientPost('users', body);
 }
 
