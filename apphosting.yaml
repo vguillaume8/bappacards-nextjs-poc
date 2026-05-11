@@ -20,7 +20,7 @@ env:
 
   # Firebase client config — NOT secrets; publicly embedded in JS bundle at build time
   - variable: NEXT_PUBLIC_FIREBASE_KEY
-    value: AIzaSyAovi93QVitIIEsV4xteIWh63heirMRHz4
+    value: AIzaSyA2s_jzuDAw3nZh3qsbPtwXdtAs-BH1Lqg
     availability:
       - BUILD
       - RUNTIME
@@ -50,13 +50,13 @@ env:
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_APP_ID
-    value: 1:525337956553:web:12b090822872e7b10b3d18
+    value: "1:525337956553:web:f565bb68764df30f0b3d18"
     availability:
       - BUILD
       - RUNTIME
 
   - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-    value: G-4XKRRZYT1Q
+    value: G-MLW0H4X0KB
     availability:
       - BUILD
       - RUNTIME
@@ -68,9 +68,29 @@ env:
       - BUILD
       - RUNTIME
 
-  # Analytics — GA measurement ID matches Firebase Analytics property for this app
+  # Analytics
   - variable: NEXT_PUBLIC_GA_MEASUREMENT_ID
-    value: G-4XKRRZYT1Q
+    value: G-MLW0H4X0KB
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_META_PIXEL_ID
+    value: "676607668099771"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # Error tracking
+  - variable: NEXT_PUBLIC_SENTRY_DSN
+    value: https://ba3d4f18db27db330e2dfa8091d1cec0@o4509782704979968.ingest.us.sentry.io/4509784035033088
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # reCAPTCHA
+  - variable: NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+    value: 6Lem_ncsAAAAAL9ztajwxcwOtWrwYs3-YrC4OzwR
     availability:
       - BUILD
       - RUNTIME
