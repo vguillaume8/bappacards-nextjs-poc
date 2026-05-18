@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     title: 'BappaCards — Digital Business Cards',
     description: 'NFC + QR + Apple Wallet digital business cards for modern professionals.',
   },
+  twitter: { card: 'summary_large_image' },
 };
 
 const features = [
